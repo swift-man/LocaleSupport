@@ -12,9 +12,13 @@ class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    
+    let localeJP = Locale(localeIdentifiers: .japaneseJapan)
+    print(localeJP)
+    
+    let localeSupport = LocaleSupport()
+    let localeKR: Locale = localeSupport[.korean]
+    print(localeKR)
   }
-
-
 }
 
