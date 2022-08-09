@@ -24,12 +24,12 @@ let package = Package(
       .target(
         name: "LocaleSupport",
         dependencies: [],
-        path: "Sources",
+        path: "Sources/LocaleSupport",
         exclude: ["Info.plist"]),
       .testTarget(
         name: "LocaleSupportTests",
         dependencies: ["LocaleSupport"],
-        path: "Tests",
+        path: "Tests/LocaleSupportTests",
         exclude: ["Info.plist"]),
     ],
   swiftLanguageVersions: [.v5]
