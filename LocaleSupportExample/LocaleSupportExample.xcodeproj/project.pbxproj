@@ -16,6 +16,7 @@
 		E50F706028A2979500EDFEE9 /* LocaleSupportExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50F705F28A2979500EDFEE9 /* LocaleSupportExampleTests.swift */; };
 		E50F706A28A2979500EDFEE9 /* LocaleSupportExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50F706928A2979500EDFEE9 /* LocaleSupportExampleUITests.swift */; };
 		E50F706C28A2979500EDFEE9 /* LocaleSupportExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50F706B28A2979500EDFEE9 /* LocaleSupportExampleUITestsLaunchTests.swift */; };
+		E580D7AC28A2A69E00C4F850 /* LocaleSupport in Frameworks */ = {isa = PBXBuildFile; productRef = E580D7AB28A2A69E00C4F850 /* LocaleSupport */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E580D7AC28A2A69E00C4F850 /* LocaleSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +145,9 @@
 			dependencies = (
 			);
 			name = LocaleSupportExample;
+			packageProductDependencies = (
+				E580D7AB28A2A69E00C4F850 /* LocaleSupport */,
+			);
 			productName = LocaleSupportExample;
 			productReference = E50F704528A2979300EDFEE9 /* LocaleSupportExample.app */;
 			productType = "com.apple.product-type.application";
@@ -216,6 +221,7 @@
 			);
 			mainGroup = E50F703C28A2979300EDFEE9;
 			packageReferences = (
+				E580D7AA28A2A69E00C4F850 /* XCRemoteSwiftPackageReference "LocaleSupport" */,
 			);
 			productRefGroup = E50F704628A2979300EDFEE9 /* Products */;
 			projectDirPath = "";
@@ -604,6 +610,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E580D7AA28A2A69E00C4F850 /* XCRemoteSwiftPackageReference "LocaleSupport" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swift-man/LocaleSupport";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E580D7AB28A2A69E00C4F850 /* LocaleSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E580D7AA28A2A69E00C4F850 /* XCRemoteSwiftPackageReference "LocaleSupport" */;
+			productName = LocaleSupport;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E50F703D28A2979300EDFEE9 /* Project object */;
 }

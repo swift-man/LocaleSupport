@@ -7,19 +7,19 @@
 
 import Foundation
 
-public final class LocalSupport {
-  let dic: [LocaleIdentifiers: String]
+public final class LocaleSupport {
+  private let localeMap: [LocaleIdentifiers: String]
   
   public init() {
-    var dic: [LocaleIdentifiers: String] = [:]
-    for identifier in LocaleIdentifiers.allCases {
-      dic[identifier] = identifier.rawValue
+    var localeMap: [LocaleIdentifiers: String] = [:]
+    LocaleIdentifiers.allCases.forEach {
+      localeMap[$0] = $0.rawValue
     }
-    self.dic = dic
+    self.localeMap = localeMap
   }
   
   public subscript (key: LocaleIdentifiers) -> Locale {
-    get { return Locale(identifier: dic[key]!)
+    get { return Locale(identifier: localeMap[key]!)
     }
   }
 }

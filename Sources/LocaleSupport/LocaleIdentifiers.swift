@@ -2,7 +2,7 @@
 //  LocaleIdentifiers.swift
 //  LocaleSupport
 //
-//  Created by 김승진 on 2021/09/05.
+//  Created by SwiftMan on 2021/09/05.
 //
 
 import Foundation

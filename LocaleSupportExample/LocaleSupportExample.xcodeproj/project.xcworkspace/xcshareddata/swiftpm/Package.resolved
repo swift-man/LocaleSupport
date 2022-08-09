@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "localesupport",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swift-man/LocaleSupport",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0f2e5907af7466a59bee5fe1db677e100fd80506"
+      }
+    }
+  ],
+  "version" : 2
+}
