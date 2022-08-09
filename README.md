@@ -1,0 +1,2 @@
+# LocaleSupport
+swift
