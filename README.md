@@ -5,10 +5,12 @@
 
 
 ```swift
-let locale = Locale(localeidentifiers: .japaneseJapan)
+let localeJP = Locale(localeIdentifiers: .japaneseJapan)
+print(localeJP) // ja_JP (fixed)
 ```
 
 ```swift
 let localeSupport = LocaleSupport()
-let locale: Locale = localeSupport[.korean]
+let localeKR: Locale = localeSupport[.korean]
+print(localeKR) // ko (fixed)
 ```
