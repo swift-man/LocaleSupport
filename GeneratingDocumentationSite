@@ -19,6 +19,11 @@ mkdir -p "$SYMBOL_GRAPH_PATH"
 
 swift build --target "$TARGET_NAME"
 
+find "$PACKAGE_BUILD_PATH" \
+  -path "*/symbolgraph/$TARGET_NAME*.symbols.json" \
+  ! -name "${TARGET_NAME}PackageTests.symbols.json" \
+  -exec rm -f {} \;
+
 if ! swift package dump-symbol-graph --minimum-access-level "$MINIMUM_ACCESS_LEVEL"; then
   echo "warning: dump-symbol-graph exited non-zero; continuing if $TARGET_NAME symbols were emitted" >&2
 fi
