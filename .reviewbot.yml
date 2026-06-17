@@ -1,0 +1,58 @@
+version: 1
+
+review:
+  include:
+  - "**/*.swift"
+  - "**/*.md"
+  - "**/*.yml"
+  - "**/*.yaml"
+  - "Package.swift"
+  - "README.md"
+  - "LICENSE"
+  - "GeneratingDocumentationSite"
+
+  exclude:
+  # dependency / build output
+  - ".build/**"
+  - ".swiftpm/xcode/**"
+  - "DerivedData/**"
+  - "build/**"
+  - "**/build/**"
+  - "dist/**"
+  - "**/dist/**"
+  - "Pods/**"
+  - "Carthage/**"
+  - "Carthage/Build/**"
+
+  # sample app / Xcode-generated project files
+  - "LocaleSupportExample/**"
+
+  # resources / binary assets
+  - "**/*.xcassets/**"
+  - "**/*.storyboard"
+  - "**/*.png"
+  - "**/*.jpg"
+  - "**/*.jpeg"
+  - "**/*.gif"
+  - "**/*.webp"
+  - "**/*.pdf"
+  - "**/*.mp4"
+  - "**/*.mov"
+
+  # lock files / local package staging artifacts
+  - "Package.resolved"
+  - "Podfile.lock"
+
+  # generated documentation output
+  - "docs/**"
+  - "**/*.doccarchive/**"
+
+  always_review:
+  - ".reviewbot.yml"
+  - ".github/workflows/**"
+  - ".gitignore"
+  - "Package.swift"
+  - "README.md"
+  - "Sources/**"
+  - "Tests/**"
+  - "GeneratingDocumentationSite"
