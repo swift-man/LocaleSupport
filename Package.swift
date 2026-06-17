@@ -24,8 +24,7 @@ let package = Package(
       .target(
         name: "LocaleSupport",
         dependencies: [],
-        path: "Sources/LocaleSupport",
-        exclude: ["Info.plist"]),
+        path: "Sources/LocaleSupport"),
       .testTarget(
         name: "LocaleSupportTests",
         dependencies: ["LocaleSupport"],
