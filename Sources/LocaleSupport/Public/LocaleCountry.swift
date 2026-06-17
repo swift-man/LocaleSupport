@@ -103,10 +103,6 @@ public extension LocaleSupport {
   }
 
   private static func supportedRegionCodes() -> [String] {
-    if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-      return Locale.Region.isoRegions.map(\.identifier)
-    }
-
     return Locale.isoRegionCodes
   }
 
