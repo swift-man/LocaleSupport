@@ -442,7 +442,7 @@ public enum LocaleIdentifiers: String, CaseIterable {
   case frenchGuinea = "fr_GN"
   case tibetan = "bo"
   case oromoKenya = "om_KE"
-  
+
   public var dispayDescription: String {
     switch self {
     case .bosnian: return "Bosnian"
@@ -880,5 +880,13 @@ public enum LocaleIdentifiers: String, CaseIterable {
     case .tibetan: return "Tibetan"
     case .oromoKenya: return "Oromo (Kenya)"
     }
+  }
+
+  public var flagName: String {
+    guard let countryKey = Self.flagCountryKey(for: self) else {
+      return "국기 없음"
+    }
+
+    return Self.flagNameByCountryKey[countryKey] ?? "\(countryKey) 국기"
   }
 }

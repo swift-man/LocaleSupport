@@ -19,7 +19,8 @@ public final class LocaleSupport {
   }
   
   public subscript (key: LocaleIdentifiers) -> Locale {
-    get { return Locale(identifier: localeMap[key]!)
+    get {
+      return Locale(identifier: localeMap[key]!)
     }
   }
 }
