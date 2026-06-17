@@ -6,38 +6,38 @@
 //
 
 import Foundation
-import Testing
+import XCTest
 @testable import LocaleSupport
 
-struct LocaleSupportTests {
-  @Test func countriesExcludeNonCountryRegionCodes() {
+final class LocaleSupportTests: XCTestCase {
+  func testCountriesExcludeNonCountryRegionCodes() {
     let countries = LocaleSupport.countries(locale: Locale(identifier: "ko_KR"))
     let codes = Set(countries.map(\.code))
 
-    #expect(codes.contains("KR"))
-    #expect(codes.contains("US"))
-    #expect(!codes.contains("AC"))
-    #expect(!codes.contains("CP"))
-    #expect(!codes.contains("CQ"))
-    #expect(!codes.contains("DG"))
-    #expect(!codes.contains("EA"))
-    #expect(!codes.contains("IC"))
-    #expect(!codes.contains("TA"))
-    #expect(!codes.contains("XK"))
-    #expect(codes.count == countries.count)
+    XCTAssertTrue(codes.contains("KR"))
+    XCTAssertTrue(codes.contains("US"))
+    XCTAssertFalse(codes.contains("AC"))
+    XCTAssertFalse(codes.contains("CP"))
+    XCTAssertFalse(codes.contains("CQ"))
+    XCTAssertFalse(codes.contains("DG"))
+    XCTAssertFalse(codes.contains("EA"))
+    XCTAssertFalse(codes.contains("IC"))
+    XCTAssertFalse(codes.contains("TA"))
+    XCTAssertFalse(codes.contains("XK"))
+    XCTAssertEqual(codes.count, countries.count)
   }
 
-  @Test func countriesCanBeLimitedToAvailableRegionCodes() {
+  func testCountriesCanBeLimitedToAvailableRegionCodes() {
     let countries = LocaleSupport.countries(
       locale: Locale(identifier: "en_US"),
       regionCodes: ["kr", "US", "XK", "KR", "1K"]
     )
 
-    #expect(countries.map(\.code).sorted() == ["KR", "US"])
-    #expect(countries.first { $0.code == "KR" }?.flagEmoji == "🇰🇷")
+    XCTAssertEqual(countries.map(\.code).sorted(), ["KR", "US"])
+    XCTAssertEqual(countries.first { $0.code == "KR" }?.flagEmoji, "🇰🇷")
   }
 
-  @Test func countriesCanIncludeNonCountryRegionCodesWhenRequested() {
+  func testCountriesCanIncludeNonCountryRegionCodesWhenRequested() {
     let countries = LocaleSupport.countries(
       locale: Locale(identifier: "en_US"),
       regionCodes: ["AC", "US"],
@@ -45,26 +45,26 @@ struct LocaleSupportTests {
     )
     let codes = Set(countries.map(\.code))
 
-    #expect(codes == ["AC", "US"])
+    XCTAssertEqual(codes, ["AC", "US"])
   }
 
-  @Test func localeIdentifierDescriptionsUseCorrectDisplayNames() {
-    #expect(
-      LocaleIdentifiers.chineseTraditionalHanMacauSARChina.displayDescription
-        == "Chinese (Traditional Han, Macau SAR China)"
+  func testLocaleIdentifierDescriptionsUseCorrectDisplayNames() {
+    XCTAssertEqual(
+      LocaleIdentifiers.chineseTraditionalHanMacauSARChina.displayDescription,
+      "Chinese (Traditional Han, Macau SAR China)"
     )
-    #expect(
-      LocaleIdentifiers.frenchCentralAfricanRepublic.displayDescription
-        == "French (Central African Republic)"
+    XCTAssertEqual(
+      LocaleIdentifiers.frenchCentralAfricanRepublic.displayDescription,
+      "French (Central African Republic)"
     )
   }
 
-  @Test func countriesRejectInvalidRegionCodes() {
+  func testCountriesRejectInvalidRegionCodes() {
     let countries = LocaleSupport.countries(
       locale: Locale(identifier: "en_US"),
       regionCodes: ["1K"]
     )
 
-    #expect(countries.isEmpty)
+    XCTAssertTrue(countries.isEmpty)
   }
 }

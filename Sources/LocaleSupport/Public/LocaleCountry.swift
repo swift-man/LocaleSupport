@@ -45,7 +45,9 @@ public extension LocaleSupport {
     regionCodes: [String]? = nil,
     includingNonCountryRegions: Bool = false
   ) -> [LocaleCountry] {
-    let codes = (regionCodes ?? supportedRegionCodes())
+    let supportedCodes = supportedRegionCodes()
+    let validRegionCodes = Set(supportedCodes)
+    let codes = (regionCodes ?? supportedCodes)
       .map { $0.uppercased() }
       .filter { $0.count == 2 }
 
@@ -60,7 +62,7 @@ public extension LocaleSupport {
       guard
         let localizedName = locale.localizedString(forRegionCode: code),
         let englishName = englishLocale.localizedString(forRegionCode: code),
-        let flagEmoji = flagEmoji(for: code)
+        let flagEmoji = flagEmoji(for: code, validRegionCodes: validRegionCodes)
       else {
         return nil
       }
@@ -108,13 +110,16 @@ public extension LocaleSupport {
     return Locale.isoRegionCodes
   }
 
-  private static func flagEmoji(for countryCode: String) -> String? {
+  private static func flagEmoji(
+    for countryCode: String,
+    validRegionCodes: Set<String>
+  ) -> String? {
     let code = countryCode.uppercased()
 
     guard
       code.count == 2,
       code.allSatisfy({ $0 >= "A" && $0 <= "Z" }),
-      Locale.isoRegionCodes.contains(code)
+      validRegionCodes.contains(code)
     else {
       return nil
     }
