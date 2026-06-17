@@ -14,7 +14,6 @@ public struct LocaleCountry: Codable, Hashable, Identifiable, Sendable {
   public let flagEmoji: String
 
   public var id: String { code }
-  public var lowercaseCode: String { code.lowercased() }
 
   public init(
     code: String,
@@ -30,7 +29,7 @@ public struct LocaleCountry: Codable, Hashable, Identifiable, Sendable {
 }
 
 public extension LocaleSupport {
-  static let nonCountryRegionCodes: Set<String> = [
+  private static let nonCountryRegionCodes: Set<String> = [
     "AC",
     "CP",
     "CQ",
@@ -61,7 +60,7 @@ public extension LocaleSupport {
       guard
         let localizedName = locale.localizedString(forRegionCode: code),
         let englishName = englishLocale.localizedString(forRegionCode: code),
-        let flagEmoji = locale.getFlagEmoji(from: code)
+        let flagEmoji = flagEmoji(for: code)
       else {
         return nil
       }
@@ -107,5 +106,28 @@ public extension LocaleSupport {
     }
 
     return Locale.isoRegionCodes
+  }
+
+  private static func flagEmoji(for countryCode: String) -> String? {
+    let code = countryCode.uppercased()
+
+    guard
+      code.count == 2,
+      code.allSatisfy({ $0 >= "A" && $0 <= "Z" }),
+      Locale.isoRegionCodes.contains(code)
+    else {
+      return nil
+    }
+
+    let base: UInt32 = 0x1F1E6
+    let scalars = code.unicodeScalars.compactMap {
+      UnicodeScalar(base + ($0.value - 0x41))
+    }
+
+    guard scalars.count == code.count else {
+      return nil
+    }
+
+    return String(String.UnicodeScalarView(scalars))
   }
 }

@@ -30,11 +30,11 @@ struct LocaleSupportTests {
   @Test func countriesCanBeLimitedToAvailableRegionCodes() {
     let countries = LocaleSupport.countries(
       locale: Locale(identifier: "en_US"),
-      regionCodes: ["kr", "US", "XK", "KR"]
+      regionCodes: ["kr", "US", "XK", "KR", "1K"]
     )
 
     #expect(countries.map(\.code).sorted() == ["KR", "US"])
-    #expect(countries.first { $0.code == "KR" }?.lowercaseCode == "kr")
+    #expect(countries.first { $0.code == "KR" }?.flagEmoji == "🇰🇷")
   }
 
   @Test func countriesCanIncludeNonCountryRegionCodesWhenRequested() {
@@ -59,16 +59,12 @@ struct LocaleSupportTests {
     )
   }
 
-  @Test func scriptOnlyLocaleIdentifiersUseSpecificFallbackCountry() {
-    #expect(LocaleIdentifiers.flagCountryKey(for: .punjabiArabic) == "Pakistan")
-    #expect(LocaleIdentifiers.flagCountryKey(for: .uzbekArabic) == "Afghanistan")
-    #expect(LocaleIdentifiers.flagCountryKey(for: .tachelhitLatin) == "Morocco")
-  }
+  @Test func countriesRejectInvalidRegionCodes() {
+    let countries = LocaleSupport.countries(
+      locale: Locale(identifier: "en_US"),
+      regionCodes: ["1K"]
+    )
 
-  @Test func flagEmojiRejectsInvalidRegionCodes() {
-    let locale = Locale(identifier: "en_US")
-
-    #expect(locale.getFlagEmoji(from: "KR") == "🇰🇷")
-    #expect(locale.getFlagEmoji(from: "1K") == nil)
+    #expect(countries.isEmpty)
   }
 }

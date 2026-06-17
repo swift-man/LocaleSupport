@@ -886,12 +886,4 @@ public enum LocaleIdentifiers: String, CaseIterable {
   public var dispayDescription: String {
     displayDescription
   }
-
-  public var flagName: String {
-    guard let countryKey = Self.flagCountryKey(for: self) else {
-      return "국기 없음"
-    }
-
-    return Self.flagNameByCountryKey[countryKey] ?? "\(countryKey) 국기"
-  }
 }
