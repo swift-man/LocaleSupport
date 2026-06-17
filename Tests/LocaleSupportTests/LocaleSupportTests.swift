@@ -36,4 +36,39 @@ struct LocaleSupportTests {
     #expect(countries.map(\.code).sorted() == ["KR", "US"])
     #expect(countries.first { $0.code == "KR" }?.lowercaseCode == "kr")
   }
+
+  @Test func countriesCanIncludeNonCountryRegionCodesWhenRequested() {
+    let countries = LocaleSupport.countries(
+      locale: Locale(identifier: "en_US"),
+      regionCodes: ["AC", "US"],
+      includingNonCountryRegions: true
+    )
+    let codes = Set(countries.map(\.code))
+
+    #expect(codes == ["AC", "US"])
+  }
+
+  @Test func localeIdentifierDescriptionsUseCorrectDisplayNames() {
+    #expect(
+      LocaleIdentifiers.chineseTraditionalHanMacauSARChina.displayDescription
+        == "Chinese (Traditional Han, Macau SAR China)"
+    )
+    #expect(
+      LocaleIdentifiers.frenchCentralAfricanRepublic.displayDescription
+        == "French (Central African Republic)"
+    )
+  }
+
+  @Test func scriptOnlyLocaleIdentifiersUseSpecificFallbackCountry() {
+    #expect(LocaleIdentifiers.flagCountryKey(for: .punjabiArabic) == "Pakistan")
+    #expect(LocaleIdentifiers.flagCountryKey(for: .uzbekArabic) == "Afghanistan")
+    #expect(LocaleIdentifiers.flagCountryKey(for: .tachelhitLatin) == "Morocco")
+  }
+
+  @Test func flagEmojiRejectsInvalidRegionCodes() {
+    let locale = Locale(identifier: "en_US")
+
+    #expect(locale.getFlagEmoji(from: "KR") == "🇰🇷")
+    #expect(locale.getFlagEmoji(from: "1K") == nil)
+  }
 }

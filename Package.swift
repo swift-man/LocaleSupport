@@ -7,7 +7,7 @@ let package = Package(
   name: "LocaleSupport",
   platforms:
     [
-      .iOS(.v26),
+      .iOS(.v15),
       .tvOS(.v15),
       .macOS(.v11),
       .watchOS(.v5),

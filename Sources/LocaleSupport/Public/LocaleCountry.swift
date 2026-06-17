@@ -74,7 +74,18 @@ public extension LocaleSupport {
       )
     }
     .sorted {
-      $0.localizedName.localizedStandardCompare($1.localizedName) == .orderedAscending
+      let result = $0.localizedName.compare(
+        $1.localizedName,
+        options: [.caseInsensitive, .diacriticInsensitive, .numeric],
+        range: nil,
+        locale: locale
+      )
+
+      if result == .orderedSame {
+        return $0.code < $1.code
+      }
+
+      return result == .orderedAscending
     }
   }
 

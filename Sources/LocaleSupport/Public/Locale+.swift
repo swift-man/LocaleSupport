@@ -20,8 +20,11 @@ extension Locale {
     let code = countryCode.uppercased()
 
     // ISO 두 글자 코드가 맞는지 검증
-    guard code.count == 2,
-          Locale.isoRegionCodes.contains(code) else {
+    guard
+      code.count == 2,
+      code.allSatisfy({ $0 >= "A" && $0 <= "Z" }),
+      Locale.isoRegionCodes.contains(code)
+    else {
       return nil
     }
 

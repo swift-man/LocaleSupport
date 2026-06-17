@@ -443,7 +443,7 @@ public enum LocaleIdentifiers: String, CaseIterable {
   case tibetan = "bo"
   case oromoKenya = "om_KE"
 
-  public var dispayDescription: String {
+  public var displayDescription: String {
     switch self {
     case .bosnian: return "Bosnian"
     case .eweTogo: return "Ewe (Togo)"
@@ -679,7 +679,7 @@ public enum LocaleIdentifiers: String, CaseIterable {
     case .esperanto: return "Esperanto"
     case .tachelhit: return "Tachelhit"
     case .konkani: return "Konkani"
-    case .chineseTraditionalHanMacauSARChina: return "French (Central African Republic)"
+    case .chineseTraditionalHanMacauSARChina: return "Chinese (Traditional Han, Macau SAR China)"
     case .frenchRéunion: return "French (Réunion)"
     case .masai: return "Masai"
     case .rombo: return "Rombo"
@@ -740,7 +740,7 @@ public enum LocaleIdentifiers: String, CaseIterable {
     case .hausaLatinNigeria: return "Hausa (Latin, Nigeria)"
     case .sangoCentralAfricanRepublic: return "Sango (Central African Republic)"
     case .oromoEthiopia: return "Oromo (Ethiopia)"
-    case .frenchCentralAfricanRepublic: return "Chinese (Traditional Han, Macau SAR China)"
+    case .frenchCentralAfricanRepublic: return "French (Central African Republic)"
     case .ukrainianUkraine: return "Ukrainian (Ukraine)"
     case .persian: return "Persian"
     case .malteseMalta: return "Maltese (Malta)"
@@ -880,6 +880,11 @@ public enum LocaleIdentifiers: String, CaseIterable {
     case .tibetan: return "Tibetan"
     case .oromoKenya: return "Oromo (Kenya)"
     }
+  }
+
+  @available(*, deprecated, renamed: "displayDescription")
+  public var dispayDescription: String {
+    displayDescription
   }
 
   public var flagName: String {

@@ -7,17 +7,7 @@
 
 extension LocaleIdentifiers {
   static func flagCountryKey(for value: Self) -> String? {
-    // displayDescription 쪽에 서로 바뀐 것으로 보이는 케이스 보정
-    switch value {
-    case .chineseTraditionalHanMacauSARChina:
-      return "Macau SAR China"
-    case .frenchCentralAfricanRepublic:
-      return "Central African Republic"
-    default:
-      break
-    }
-
-    let description = value.dispayDescription
+    let description = value.displayDescription
 
     if let country = extractCountryKey(from: description) {
       return country
@@ -28,7 +18,13 @@ extension LocaleIdentifiers {
   }
 
   static func extractLanguageKey(from description: String) -> String {
-    let raw = description.components(separatedBy: "(").first ?? description
+    let trimmedDescription = description.trimmingCharacters(in: .whitespacesAndNewlines)
+
+    if defaultCountryKeyByLanguage[trimmedDescription] != nil {
+      return trimmedDescription
+    }
+
+    let raw = trimmedDescription.components(separatedBy: "(").first ?? trimmedDescription
     return raw.trimmingCharacters(in: .whitespacesAndNewlines)
   }
 
