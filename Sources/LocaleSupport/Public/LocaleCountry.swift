@@ -45,8 +45,8 @@ public extension LocaleSupport {
     regionCodes: [String]? = nil,
     includingNonCountryRegions: Bool = false
   ) -> [LocaleCountry] {
-    let codes = (regionCodes ?? supportedRegionCodes)
-      .compactMap(normalizedRegionCode)
+    let codes = regionCodes?.compactMap(normalizedRegionCode)
+      ?? supportedRegionCodes
 
     let uniqueCodes = Set(codes)
     let visibleCodes = uniqueCodes.filter {
