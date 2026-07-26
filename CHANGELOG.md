@@ -4,13 +4,15 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-07-27
+
 ### Added
 - Added static and instance `country(code:locale:)` APIs for single-country metadata lookup.
 - Added static and instance `flagEmoji(forRegionCode:)` APIs.
 - Added visionOS 1.0 package support.
 
 ### Changed
-- Updated the package to Swift tools 6.3 and Swift 6 language mode.
+- Raised the minimum Swift tools requirement from 5.6 to 6.3 and adopted Swift 6 language mode.
 - Made `LocaleSupport` and `LocaleCountry` conform to `Sendable`.
 - Cached supported region-code lookups and reused validated codes during country and flag construction.
 - Skipped redundant normalization when the default ISO region-code list is used.
@@ -45,6 +47,7 @@ All notable changes to this project are documented in this file.
 ### Added
 - Initial LocaleSupport release.
 
-[Unreleased]: https://github.com/swift-man/LocaleSupport/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/swift-man/LocaleSupport/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/swift-man/LocaleSupport/compare/1.1.0...2.0.0
 [1.1.0]: https://github.com/swift-man/LocaleSupport/releases/tag/1.1.0
 [1.0.0]: https://github.com/swift-man/LocaleSupport/releases/tag/1.0.0
