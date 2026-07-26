@@ -37,7 +37,7 @@ public extension LocaleSupport {
     "EA",
     "IC",
     "TA",
-    "XK",
+    "XK"
   ]
 
   static func countries(
@@ -59,19 +59,11 @@ public extension LocaleSupport {
     let englishLocale = Locale(identifier: "en_US_POSIX")
 
     return visibleCodes.compactMap { code in
-      guard
-        let localizedName = locale.localizedString(forRegionCode: code),
-        let englishName = englishLocale.localizedString(forRegionCode: code),
-        let flagEmoji = flagEmoji(for: code, validRegionCodes: validRegionCodes)
-      else {
-        return nil
-      }
-
-      return LocaleCountry(
+      makeCountry(
         code: code,
-        localizedName: localizedName,
-        englishName: englishName,
-        flagEmoji: flagEmoji
+        locale: locale,
+        englishLocale: englishLocale,
+        validRegionCodes: validRegionCodes
       )
     }
     .sorted {
@@ -90,6 +82,36 @@ public extension LocaleSupport {
     }
   }
 
+  /// Returns localized metadata for an ISO 3166-1 alpha-2 country code.
+  ///
+  /// Returns `nil` when the code is invalid, unsupported, or represents a
+  /// region that is not a country.
+  static func country(
+    code: String,
+    locale: Locale = .current
+  ) -> LocaleCountry? {
+    let normalizedCode = code.uppercased()
+
+    guard !nonCountryRegionCodes.contains(normalizedCode) else {
+      return nil
+    }
+
+    return makeCountry(
+      code: normalizedCode,
+      locale: locale,
+      englishLocale: Locale(identifier: "en_US_POSIX"),
+      validRegionCodes: Set(supportedRegionCodes())
+    )
+  }
+
+  /// Returns the flag emoji for a supported two-letter region code.
+  static func flagEmoji(forRegionCode regionCode: String) -> String? {
+    flagEmoji(
+      for: regionCode,
+      validRegionCodes: Set(supportedRegionCodes())
+    )
+  }
+
   func countries(
     locale: Locale = .current,
     regionCodes: [String]? = nil,
@@ -102,8 +124,46 @@ public extension LocaleSupport {
     )
   }
 
+  /// Instance convenience for ``country(code:locale:)``.
+  func country(
+    code: String,
+    locale: Locale = .current
+  ) -> LocaleCountry? {
+    Self.country(code: code, locale: locale)
+  }
+
+  /// Instance convenience for ``flagEmoji(forRegionCode:)``.
+  func flagEmoji(forRegionCode regionCode: String) -> String? {
+    Self.flagEmoji(forRegionCode: regionCode)
+  }
+
   private static func supportedRegionCodes() -> [String] {
     return Locale.isoRegionCodes
+  }
+
+  private static func makeCountry(
+    code: String,
+    locale: Locale,
+    englishLocale: Locale,
+    validRegionCodes: Set<String>
+  ) -> LocaleCountry? {
+    guard
+      let localizedName = locale.localizedString(forRegionCode: code),
+      let englishName = englishLocale.localizedString(forRegionCode: code),
+      let flagEmoji = flagEmoji(
+        for: code,
+        validRegionCodes: validRegionCodes
+      )
+    else {
+      return nil
+    }
+
+    return LocaleCountry(
+      code: code,
+      localizedName: localizedName,
+      englishName: englishName,
+      flagEmoji: flagEmoji
+    )
   }
 
   private static func flagEmoji(

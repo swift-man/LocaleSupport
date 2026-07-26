@@ -48,6 +48,45 @@ final class LocaleSupportTests: XCTestCase {
     XCTAssertEqual(codes, ["AC", "US"])
   }
 
+  func testCountryReturnsLocalizedMetadataForRegionCode() {
+    let locale = Locale(identifier: "ko_KR")
+    let country = LocaleSupport.country(code: "kr", locale: locale)
+
+    XCTAssertEqual(country?.code, "KR")
+    XCTAssertEqual(
+      country?.localizedName,
+      locale.localizedString(forRegionCode: "KR")
+    )
+    XCTAssertEqual(country?.flagEmoji, "🇰🇷")
+  }
+
+  func testCountryRejectsInvalidAndNonCountryRegionCodes() {
+    XCTAssertNil(LocaleSupport.country(code: "1K"))
+    XCTAssertNil(LocaleSupport.country(code: "XK"))
+  }
+
+  func testFlagEmojiReturnsEmojiForValidRegionCode() {
+    XCTAssertEqual(
+      LocaleSupport.flagEmoji(forRegionCode: "kr"),
+      "🇰🇷"
+    )
+    XCTAssertNil(LocaleSupport.flagEmoji(forRegionCode: "1K"))
+  }
+
+  func testInstanceCountryConvenienceAPIsMatchStaticAPIs() {
+    let localeSupport = LocaleSupport()
+    let locale = Locale(identifier: "en_US")
+
+    XCTAssertEqual(
+      localeSupport.country(code: "US", locale: locale),
+      LocaleSupport.country(code: "US", locale: locale)
+    )
+    XCTAssertEqual(
+      localeSupport.flagEmoji(forRegionCode: "US"),
+      LocaleSupport.flagEmoji(forRegionCode: "US")
+    )
+  }
+
   func testLocaleIdentifierDescriptionsUseCorrectDisplayNames() {
     XCTAssertEqual(
       LocaleIdentifiers.chineseTraditionalHanMacauSARChina.displayDescription,
