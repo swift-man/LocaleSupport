@@ -50,7 +50,8 @@ public extension LocaleSupport {
 
     let uniqueCodes = Set(codes)
     let visibleCodes = uniqueCodes.filter {
-      includingNonCountryRegions || !nonCountryRegionCodes.contains($0)
+      validRegionCodes.contains($0) &&
+        (includingNonCountryRegions || !nonCountryRegionCodes.contains($0))
     }
 
     return visibleCodes.compactMap { code in
@@ -82,6 +83,7 @@ public extension LocaleSupport {
   ) -> LocaleCountry? {
     guard
       let normalizedCode = normalizedRegionCode(code),
+      validRegionCodes.contains(normalizedCode),
       !nonCountryRegionCodes.contains(normalizedCode)
     else {
       return nil
@@ -92,10 +94,14 @@ public extension LocaleSupport {
 
   /// Returns the flag emoji for a supported two-letter region code.
   static func flagEmoji(forRegionCode regionCode: String) -> String? {
-    flagEmoji(
-      for: regionCode,
-      validRegionCodes: validRegionCodes
-    )
+    guard
+      let normalizedCode = normalizedRegionCode(regionCode),
+      validRegionCodes.contains(normalizedCode)
+    else {
+      return nil
+    }
+
+    return flagEmoji(forValidatedRegionCode: normalizedCode)
   }
 
   func countries(
@@ -134,10 +140,7 @@ public extension LocaleSupport {
     guard
       let localizedName = locale.localizedString(forRegionCode: code),
       let englishName = englishLocale.localizedString(forRegionCode: code),
-      let flagEmoji = flagEmoji(
-        for: code,
-        validRegionCodes: validRegionCodes
-      )
+      let flagEmoji = flagEmoji(forValidatedRegionCode: code)
     else {
       return nil
     }
@@ -151,16 +154,8 @@ public extension LocaleSupport {
   }
 
   private static func flagEmoji(
-    for countryCode: String,
-    validRegionCodes: Set<String>
+    forValidatedRegionCode code: String
   ) -> String? {
-    guard
-      let code = normalizedRegionCode(countryCode),
-      validRegionCodes.contains(code)
-    else {
-      return nil
-    }
-
     let base: UInt32 = 0x1F1E6
     let scalars = code.unicodeScalars.compactMap {
       UnicodeScalar(base + ($0.value - 0x41))
