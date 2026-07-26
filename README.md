@@ -23,6 +23,11 @@ let country = LocaleSupport.country(
   code: "KR",
   locale: Locale(identifier: "ko_KR")
 )
-print(country?.localizedName) // 대한민국
-print(LocaleSupport.flagEmoji(forRegionCode: "KR")) // 🇰🇷
+if let country {
+  print(country.localizedName) // 대한민국
+}
+
+if let flagEmoji = LocaleSupport.flagEmoji(forRegionCode: "KR") {
+  print(flagEmoji) // 🇰🇷
+}
 ```

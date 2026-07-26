@@ -62,6 +62,8 @@ final class LocaleSupportTests: XCTestCase {
 
   func testCountryRejectsInvalidAndNonCountryRegionCodes() {
     XCTAssertNil(LocaleSupport.country(code: "1K"))
+    XCTAssertNil(LocaleSupport.country(code: "ß"))
+    XCTAssertNil(LocaleSupport.country(code: "A\u{301}"))
     XCTAssertNil(LocaleSupport.country(code: "XK"))
   }
 
@@ -71,6 +73,8 @@ final class LocaleSupportTests: XCTestCase {
       "🇰🇷"
     )
     XCTAssertNil(LocaleSupport.flagEmoji(forRegionCode: "1K"))
+    XCTAssertNil(LocaleSupport.flagEmoji(forRegionCode: "ß"))
+    XCTAssertNil(LocaleSupport.flagEmoji(forRegionCode: "A\u{301}"))
   }
 
   func testInstanceCountryConvenienceAPIsMatchStaticAPIs() {
@@ -101,9 +105,15 @@ final class LocaleSupportTests: XCTestCase {
   func testCountriesRejectInvalidRegionCodes() {
     let countries = LocaleSupport.countries(
       locale: Locale(identifier: "en_US"),
-      regionCodes: ["1K"]
+      regionCodes: ["1K", "ß", "A\u{301}"]
     )
 
     XCTAssertTrue(countries.isEmpty)
+  }
+
+  func testLocaleSupportIsSendable() {
+    func requireSendable<Value: Sendable>(_: Value) {}
+
+    requireSendable(LocaleSupport())
   }
 }
