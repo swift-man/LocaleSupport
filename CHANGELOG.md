@@ -4,7 +4,9 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
-## [2.0.0] - 2026-07-27
+> `2.0.0` was withdrawn and replaced by `1.2.0` without code changes.
+
+## [1.2.0] - 2026-07-27
 
 ### Added
 - Added static and instance `country(code:locale:)` APIs for single-country metadata lookup.
@@ -47,7 +49,7 @@ All notable changes to this project are documented in this file.
 ### Added
 - Initial LocaleSupport release.
 
-[Unreleased]: https://github.com/swift-man/LocaleSupport/compare/2.0.0...HEAD
-[2.0.0]: https://github.com/swift-man/LocaleSupport/compare/1.1.0...2.0.0
+[Unreleased]: https://github.com/swift-man/LocaleSupport/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/swift-man/LocaleSupport/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/swift-man/LocaleSupport/releases/tag/1.1.0
 [1.0.0]: https://github.com/swift-man/LocaleSupport/releases/tag/1.0.0
