@@ -1,4 +1,4 @@
-// swift-tools-version: 5.6
+// swift-tools-version: 6.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -11,6 +11,7 @@ let package = Package(
       .tvOS(.v15),
       .macOS(.v11),
       .watchOS(.v5),
+      .visionOS(.v1),
     ],
   products:
     [
@@ -31,5 +32,5 @@ let package = Package(
         path: "Tests/LocaleSupportTests",
         exclude: ["Info.plist"]),
     ],
-  swiftLanguageVersions: [.v5]
+  swiftLanguageModes: [.v6]
 )

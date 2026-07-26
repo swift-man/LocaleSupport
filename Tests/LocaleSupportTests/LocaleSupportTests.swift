@@ -48,6 +48,49 @@ final class LocaleSupportTests: XCTestCase {
     XCTAssertEqual(codes, ["AC", "US"])
   }
 
+  func testCountryReturnsLocalizedMetadataForRegionCode() {
+    let locale = Locale(identifier: "ko_KR")
+    let country = LocaleSupport.country(code: "kr", locale: locale)
+
+    XCTAssertEqual(country?.code, "KR")
+    XCTAssertEqual(
+      country?.localizedName,
+      locale.localizedString(forRegionCode: "KR")
+    )
+    XCTAssertEqual(country?.flagEmoji, "🇰🇷")
+  }
+
+  func testCountryRejectsInvalidAndNonCountryRegionCodes() {
+    XCTAssertNil(LocaleSupport.country(code: "1K"))
+    XCTAssertNil(LocaleSupport.country(code: "ß"))
+    XCTAssertNil(LocaleSupport.country(code: "A\u{301}"))
+    XCTAssertNil(LocaleSupport.country(code: "XK"))
+  }
+
+  func testFlagEmojiReturnsEmojiForValidRegionCode() {
+    XCTAssertEqual(
+      LocaleSupport.flagEmoji(forRegionCode: "kr"),
+      "🇰🇷"
+    )
+    XCTAssertNil(LocaleSupport.flagEmoji(forRegionCode: "1K"))
+    XCTAssertNil(LocaleSupport.flagEmoji(forRegionCode: "ß"))
+    XCTAssertNil(LocaleSupport.flagEmoji(forRegionCode: "A\u{301}"))
+  }
+
+  func testInstanceCountryConvenienceAPIsMatchStaticAPIs() {
+    let localeSupport = LocaleSupport()
+    let locale = Locale(identifier: "en_US")
+
+    XCTAssertEqual(
+      localeSupport.country(code: "US", locale: locale),
+      LocaleSupport.country(code: "US", locale: locale)
+    )
+    XCTAssertEqual(
+      localeSupport.flagEmoji(forRegionCode: "US"),
+      LocaleSupport.flagEmoji(forRegionCode: "US")
+    )
+  }
+
   func testLocaleIdentifierDescriptionsUseCorrectDisplayNames() {
     XCTAssertEqual(
       LocaleIdentifiers.chineseTraditionalHanMacauSARChina.displayDescription,
@@ -62,9 +105,15 @@ final class LocaleSupportTests: XCTestCase {
   func testCountriesRejectInvalidRegionCodes() {
     let countries = LocaleSupport.countries(
       locale: Locale(identifier: "en_US"),
-      regionCodes: ["1K"]
+      regionCodes: ["1K", "ß", "A\u{301}"]
     )
 
     XCTAssertTrue(countries.isEmpty)
+  }
+
+  func testLocaleSupportIsSendable() {
+    func requireSendable<Value: Sendable>(_: Value) {}
+
+    requireSendable(LocaleSupport())
   }
 }

@@ -1,10 +1,10 @@
 # LocaleSupport
 
 ![Badge - Build](https://img.shields.io/badge/build-passing-ra1028.svg?style=flat-square)
-![Badge - Swift](https://img.shields.io/badge/swift5-white.svg?style=flat-square&logo=Swift)
+![Badge - Swift](https://img.shields.io/badge/swift6.3-white.svg?style=flat-square&logo=Swift)
 ![Badge - Version](https://img.shields.io/badge/Version-1.1.0-1177AA?style=flat-square)
 ![Badge - Swift Package Manager](https://img.shields.io/badge/SPM-compatible-orange?style=flat-square)
-![Badge - Platform](https://img.shields.io/badge/platform-mac|ios|watchos|tvos-yellow?style=flat-square)
+![Badge - Platform](https://img.shields.io/badge/platform-mac|ios|watchos|tvos|visionos-yellow?style=flat-square)
 ![Badge - License](https://img.shields.io/badge/license-MIT-black?style=flat-square)
 
 ```swift
@@ -16,4 +16,18 @@ print(localeJP) // ja_JP (fixed)
 let localeSupport = LocaleSupport()
 let localeKR: Locale = localeSupport[.korean]
 print(localeKR) // ko (fixed)
+```
+
+```swift
+let country = LocaleSupport.country(
+  code: "KR",
+  locale: Locale(identifier: "ko_KR")
+)
+if let country {
+  print(country.localizedName) // 대한민국
+}
+
+if let flagEmoji = LocaleSupport.flagEmoji(forRegionCode: "KR") {
+  print(flagEmoji) // 🇰🇷
+}
 ```
